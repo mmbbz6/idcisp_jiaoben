@@ -3,6 +3,6 @@ jdk-8u171-linux-x64.tar.gz
 kafka_2.12-0.10.2.0.tgz
 zookeeper-3.4.10.tar.gz
 
-expectÈí¼þ°²×°°ü
+expectè½¯ä»¶å®‰è£…åŒ…
 expect-5.43.0.tar.gz
 tcl8.4.11-src.tar.gz
