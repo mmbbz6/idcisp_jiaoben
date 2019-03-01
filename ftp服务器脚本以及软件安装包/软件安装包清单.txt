@@ -1,0 +1,8 @@
+filebeat-6.3.0-linux-x86_64.tar.gz
+jdk-8u171-linux-x64.tar.gz
+kafka_2.12-0.10.2.0.tgz
+zookeeper-3.4.10.tar.gz
+
+expect软件安装包
+expect-5.43.0.tar.gz
+tcl8.4.11-src.tar.gz

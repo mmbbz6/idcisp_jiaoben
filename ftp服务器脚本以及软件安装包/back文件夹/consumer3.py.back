@@ -1,0 +1,197 @@
+#!/usr/bin/python
+# _*_ coding:utf-8 _*_
+
+from pykafka import KafkaClient
+import json
+import ast
+import re
+import os
+import time
+from threading import Timer
+import sched
+import datetime
+import threading
+import threadpool
+import pdb
+
+#global d,rows
+#d = {}
+#rows = 0
+lock = threading.Lock()
+#balanced_consumer=''
+def fun(d):
+	print 'fun', d
+	print('Hello (%s)\n' % (threading.current_thread().name))
+	for k, v in d.items():
+        	with open(k, 'a+') as f:
+                	for i in range(0,len(v)):
+                        	f.write('%s %s %s %s %s %s\n' % (v[i][0],v[i][1],v[i][2], v[i][3], v[i][4], v[i][5]) )
+	
+	d.clear()
+	#rows = 0
+	balanced_consumer.commit_offsets()
+	print('end fun()', 'Hello (%s)\n' % (threading.current_thread().name))
+
+
+
+
+
+def fun2(l1):
+	global lock
+	rows = 0
+	numflag=1
+        d = {}
+	#print('Hello kx (%s)\n' % (threading.current_thread().name))
+	s1=1
+	#while True:
+	#	print 'true true true'
+
+	for message in balanced_consumer:
+		print '^^^^^^^^^^^^^'
+    		numflag=1
+		if s1 == 1:
+			starttime=datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+			s1 = 0
+			
+		if message is not None:
+        		msg=message.value
+			#print('4444444',type(msg),msg)
+			#msg2=eval(msg)
+			msg2=ast.literal_eval(msg)
+			print('Hello kx (%s)\n' % (threading.current_thread().name))
+			print('55555555',type(msg2),msg2)
+			msg3 = msg2.get('message')
+			msg4 = re.split(r'[\s]+', msg3)
+			print(msg4[0:6])
+			
+			endwith=re.compile(r'.*.gz') 
+            if endwith.match(msg4[2]):
+                flag = 'idcisp-rename'
+            else:
+                flag = 'idcisp-close'
+								
+			#msg4=['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1']
+			
+			path = '/ftpdata/log/'
+			if not os.path.exists(path):
+				os.makedirs(path)
+
+			path2 = path + msg4[5] + '/'
+			if not os.path.exists(path2):
+				os.makedirs(path2)
+
+			filenamepath = path2 +  msg4[4][0:10] + '_' + flag + '.txt'
+			#filenamepath = '/ftpdata/log'
+			if not filenamepath in d:
+				v = ((msg4[0],msg4[1],msg4[2],msg4[3],msg4[4],msg4[5]),)
+				d[filenamepath] = v
+				print('@@@@@@@@',filenamepath,d[filenamepath])
+			else:
+				v0 = d[filenamepath]
+				v1 = ((msg4[0],msg4[1],msg4[2],msg4[3],msg4[4],msg4[5]),)
+				d[filenamepath] = v0 + v1
+				print('#######', filenamepath,d[filenamepath])
+			rows += 1
+			if rows == 2:
+				if lock.acquire():
+					try:
+						#t=Timer(1, fun, args=[d])    
+						#print '*****',t
+						#r = t.start()
+						#print r
+						#t.join()
+						fun(d)
+						print ('num num num','Hello kx (%s)\n' % (threading.current_thread().name), d)
+						time.sleep(3)
+					except:
+						pass
+					finally:
+						lock.release()
+						rows=0
+						#s1=1
+						starttime=int(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))-7
+						time.sleep(5)
+						numflag=0
+						
+	
+		
+		endtime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
+		duration = int(endtime) - int(starttime)
+		print starttime,endtime,duration
+		if duration >= 6 and numflag==1:
+			if lock.acquire():
+				try:
+					#t=Timer(1,fun,args=[d])
+					#print '*******',t
+					#r = t.start()
+					#print r
+					#t.join()
+					fun(d)
+					print('time time time', 'Hello kx (%s)\n' % (threading.current_thread().name), d)
+					time.sleep(3)
+					s1=1
+					#starttime=int(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))-7
+				except:
+					pass
+				finally:
+					lock.release()
+					rows=0
+					
+					
+def fun3():
+	global lock
+	while True:	
+		h=datetime.datetime.now().strftime('%H')
+		M=datetime.datetime.now().strftime('%M')
+		s=datetime.datetime.now().strftime('%S')
+		hms=h+M+s
+		if hms == '205230':
+			if lock.acquire():
+				try:	
+					t=Timer(1, fun, args=[d])
+					print '............',t
+        				r = t.start()
+					t.join()
+					time.sleep(3)
+				except:
+					pass
+				finally:
+					lock.release()
+			
+		else:
+    			pass                 	
+
+
+if __name__ == '__main__':
+	#global balanced_consumer
+        #global d,rows
+        client=KafkaClient(hosts='192.168.1.108:9092')
+        print client.topics
+	#print (help(client))
+        topic=client.topics['test6']
+	#print(help(topic))
+	print (type(topic.partitions))
+	
+
+        balanced_consumer = topic.get_balanced_consumer(
+        reset_offset_on_start=False,
+        consumer_group='testgroup',
+        auto_commit_enable=False,
+	auto_commit_interval_ms=1000000,
+        zookeeper_connect='192.168.1.108:2181'
+        )
+        #t1 = threading.Thread(target=fun2)
+        #t2 = threading.Thread(target=fun3)
+	#t1.start()
+	#t2.start()
+	#t1.join()
+	#t2.join()
+	#pdb.set_trace()
+	pool = threadpool.ThreadPool(2)
+	#var = [(None, d)]
+	l1=[1,2]
+	#var=[(l1,None)]
+	tasks = threadpool.makeRequests(fun2, l1)
+	print(len(tasks))
+	[pool.putRequest(task) for task in tasks]
+	pool.wait()

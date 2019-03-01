@@ -1,0 +1,13 @@
+Jun  4 14:29:37 idcisp-ftp-113 internal-sftp[7607]: close "/ftpdata/tj6_fdr/201806022249280029413006.txt.gz.tmp" bytes read 0 written 101106265
+Jun  4 14:29:37 idcisp-ftp-107 internal-sftp[25826]: rename old "/ftpdata/gd21_fdr/201805162300360242851021_137.txt.gz.tmp" new "/ftpdata/gd21_fdr/201805162300360242851021.txt.gz"
+Jun  4 14:29:37 idcisp-ftp-098 internal-sftp[32275]: rename old "/ftpdata/gd6_fdr/201805170910330187851004_2.txt.gz.tmp" new "/ftpdata/gd6_fdr/201805170910330187851004.txt.gz"
+Jun  4 14:29:37 idcisp-ftp-108 internal-sftp[15237]: close "/ftpdata/gd26_fdr/201805171840300235051034_2030.txt.gz.tmp" bytes read 0 written 88799
+Jun  4 14:29:37 idcisp-ftp-107 internal-sftp[25822]: close "/ftpdata/gd21_fdr/201805172225380242651021_9.txt.gz.tmp" bytes read 0 written 438
+Jun  4 14:29:37 idcisp-ftp-108 internal-sftp[15270]: close "/ftpdata/gd26_fdr/201805172000300234851034_3079.txt.gz.tmp" bytes read 0 written 109139
+Jun  4 14:29:37 idcisp-ftp-113 internal-sftp[7607]: rename old "/ftpdata/tj6_fdr/201806022249280029413006.txt.gz.tmp" new "/ftpdata/tj6_fdr/201806022249280029413006.txt.gz"
+Jun  4 14:29:37 idcisp-ftp-078 internal-sftp[8792]: close ".//./201806041429220200091015.txt.gz.tmp" bytes read 0 written 9594065
+Jun  4 14:29:37 idcisp-ftp-113 internal-sftp[7607]: rename old "/ftpdata/tj6_fdr/201806022249280029413006.txt.gz.tmp" new "/ftpdata/tj6_fdr/201806022249280029413006.txt.gz"
+Jun  4 14:29:37 idcisp-ftp-078 internal-sftp[8792]: rename old ".//./201806041429220200091015.txt.gz.tmp" new ".//./201806041429220200091015.txt.gz"
+Jun  4 14:29:37 idcisp-ftp-106 internal-sftp[17764]: close "/ftpdata/gd22_fdr/201805171555360231651020_284.txt.gz.tmp" bytes read 0 written 8484
+Jun  4 14:29:37 idcisp-ftp-106 internal-sftp[17766]: close "/ftpdata/gd22_fdr/201805171655360228051020_208.txt.gz.tmp" bytes read 0 written 8940
+Jun  4 14:29:37 idcisp-ftp-108 internal-sftp[15237]: rename old "/ftpdata/gd26_fdr/201805171840300235051034_2030.txt.gz.tmp" new "/ftpdata/gd26_fdr/201805171840300235051034.txt.gz"
