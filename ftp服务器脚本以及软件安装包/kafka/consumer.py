@@ -192,11 +192,17 @@ def fun2(l1):
 
 			path2 = path + roomnumber + '/' 
                         if not os.path.exists(path2):
-                                os.makedirs(path2)
+                                try:
+					os.makedirs(path2)
+				except:
+					pass
 
 			path3 = path2 + filetime_right + '/'
                         if not os.path.exists(path3):
-                        	os.makedirs(path3)
+                        	try:
+					os.makedirs(path3)
+				except:
+					pass
 
 			filenamepath = path3 +  hour + '_' + flag + '.txt' 
 			if not filenamepath in d: 
